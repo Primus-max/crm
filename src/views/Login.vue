@@ -6,19 +6,28 @@
                 <input
                         id="email"
                         type="text"
-                        class="validate"
+                        v-model="email"
+                        :class="{invalid: v$.email.$error}"
                 >
                 <label for="email">Email</label>
-                <small class="helper-text invalid">Email</small>
+                <small class="helper-text invalid"
+                       v-for="(error, index) of v$.email.$errors">
+                    {{ printError(error.$validator, error.$params) }}
+                </small>
             </div>
             <div class="input-field">
                 <input
                         id="password"
                         type="password"
-                        class="validate"
+                        v-model="password"
+                        :class="{invalid: v$.password.$error}"
                 >
                 <label for="password">Пароль</label>
-                <small class="helper-text invalid">Password</small>
+                <small class="helper-text invalid"
+                       v-for="(error, index) of v$.password.$errors"
+                >
+                    {{ printError(error.$validator, error.$params) }}
+                </small>
             </div>
         </div>
         <div class="card-action">
@@ -41,16 +50,64 @@
 </template>
 
 <script>
+    import useVuelidate from '@vuelidate/core'
+    import {required, minLength, email} from '@vuelidate/validators'
+
     export default {
-        name: 'login',
-        methods:{
-            submitHandler(){
-                 this.$router.push('/')
-            }
+        name: 'Login',
+        setup() {
+            return {v$: useVuelidate()}
         },
+        data: () => ({
+            email: '',
+            password: '',
+        }),
+        validations: () => ({
+            email: {email, required},
+            password: {required, minLength: minLength(6)}
+        }),
+        methods: {
+            showToast() {
+                this.$toast.show("Email Sent!", {
+                    position: "top-right",
+                    duration: 50000,
+                });
+
+            },
+            submitHandler() {
+                this.v$.$touch()
+                if (this.v$.$error) return
+
+                const formData = {
+                    email: this.email,
+                    password: this.password
+                }
+
+                this.$router.push('/');
+            },
+            mounted() {
+
+            },
+
+            printError($name, $param) {
+                console.log($name)
+                // console.log($param)
+                if ($name === 'required') {
+                    return 'Поле не должно быть пустым'
+                } else if ($name === 'minLength') {
+                    console.log($param)
+                    return `Минимальная длина должна быть ${$param.min} символов, сейчас он ${this.password.length}`
+                } else if ($name === 'email') {
+                    return 'Почта указана не полностью, проверьте'
+                }
+            }
+        }
     }
 </script>
 
 <style scoped>
-
+    .toasting {
+        color: yellow;
+        background-color: pink;
+    }
 </style>

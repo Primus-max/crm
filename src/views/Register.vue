@@ -1,36 +1,51 @@
 <template>
-    <form class="card auth-card">
+    <form class="card auth-card" @submit.prevent="submitHandler">
         <div class="card-content">
             <span class="card-title">Домашняя бухгалтерия</span>
             <div class="input-field">
                 <input
                         id="email"
                         type="text"
+                        v-model="email"
+                        :class="{invalid: v$.email.$error}"
                 >
                 <label for="email">Email</label>
-                <small class="helper-text invalid">Email</small>
+                <small class="helper-text invalid"
+                       v-for="(error, index) of v$.email.$errors">
+                    {{ printError(error.$validator, error.$params) }}
+                </small>
             </div>
             <div class="input-field">
                 <input
                         id="password"
                         type="password"
-                        class="validate"
+                        v-model="password"
+                        :class="{invalid: v$.password.$error}"
                 >
                 <label for="password">Пароль</label>
-                <small class="helper-text invalid">Password</small>
+                <small class="helper-text invalid"
+                       v-for="(error, index) of v$.password.$errors"
+                >
+                    {{ printError(error.$validator, error.$params) }}
+                </small>
             </div>
             <div class="input-field">
                 <input
                         id="name"
                         type="text"
-                        class="validate"
+                        v-model="name"
+                        :class="{invalid: v$.name.$error}"
                 >
                 <label for="name">Имя</label>
-                <small class="helper-text invalid">Name</small>
+                <small class="helper-text invalid"
+                       v-for="(error, index) of v$.name.$errors"
+                >
+                    {{ printError(error.$validator, error.$params) }}
+                </small>
             </div>
             <p>
                 <label>
-                    <input type="checkbox" />
+                    <input type="checkbox" v-model="agree"/>
                     <span>С правилами согласен</span>
                 </label>
             </p>
@@ -48,15 +63,61 @@
 
             <p class="center">
                 Уже есть аккаунт?
-                <a href="/">Войти!</a>
+                <router-link to="/login">Войти!</router-link>
             </p>
         </div>
     </form>
 </template>
 
 <script>
-    export default {
+    import useVuelidate from "@vuelidate/core";
+    import {email, minLength, required} from "@vuelidate/validators";
 
+    export default {
+        name: 'Register',
+        setup() {
+            return {v$: useVuelidate()}
+        },
+        data: () => ({
+            email: '',
+            password: '',
+            name: '',
+            agree: false,
+        }),
+        validations: () => ({
+            email: {email, required},
+            password: {required, minLength: minLength(6)},
+            name: {required},
+            agree: {checked: v => v}
+        }),
+        methods: {
+            submitHandler() {
+                this.v$.$touch()
+                if (this.v$.$error) return
+
+                const formData = {
+                    email: this.email,
+                    password: this.password,
+                    name: this.name
+                }
+                console.log(formData)
+                this.$router.push('/')
+
+            },
+
+            printError($name, $param) {
+                console.log($name)
+
+                if ($name === 'required') {
+                    return 'Поле не должно быть пустым'
+                } else if ($name === 'minLength') {
+                    console.log($param)
+                    return `Минимальная длина должна быть ${$param.min} символов, сейчас он ${this.password.length}`
+                } else if ($name === 'email') {
+                    return 'Почта указана не полностью, проверьте'
+                }
+            }
+        }
 
     }
 </script>

@@ -49,7 +49,12 @@
         methods: {
             logout() {
                 this.$router.push('/login?message=logout')
-            },
+
+                this.$toast.info("Вы вышли из аккаунта", {
+                    position: "top-right",
+                    duration: 3000,
+                })
+            }
         },
         mounted() {
             this.interval = setInterval(() => {
