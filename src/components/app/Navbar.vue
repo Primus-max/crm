@@ -47,7 +47,8 @@
             dropdown: null
         }),
         methods: {
-            logout() {
+            async logout() {
+                await this.$store.dispatch('logout')
                 this.$router.push('/login?message=logout')
 
                 this.$toast.info("Вы вышли из аккаунта", {
@@ -76,3 +77,5 @@
 <style scoped>
 
 </style>
+
+console.log(46288 * 51)

@@ -74,7 +74,7 @@
                 });
 
             },
-            submitHandler() {
+            async submitHandler() {
                 this.v$.$touch()
                 if (this.v$.$error) return
 
@@ -83,9 +83,17 @@
                     password: this.password
                 }
 
-                this.$router.push('/');
+                try {
+                    await this.$store.dispatch('login', formData);
+                    this.$router.push('/');
+                } catch (e) {
+                    this.$toast.error("Вы не авторизовались!", {
+                        position: "top-right",
+                        duration: 3000,
+                    });
+                }
             },
-            mounted() {
+            compute() {
 
             },
 

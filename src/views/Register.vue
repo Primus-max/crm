@@ -91,7 +91,7 @@
             agree: {checked: v => v}
         }),
         methods: {
-            submitHandler() {
+            async submitHandler() {
                 this.v$.$touch()
                 if (this.v$.$error) return
 
@@ -100,8 +100,11 @@
                     password: this.password,
                     name: this.name
                 }
-                console.log(formData)
-                this.$router.push('/')
+               try {
+                   await this.$store.dispatch('register', formData)
+                   this.$router.push('/')
+               } catch(e){}
+
 
             },
 
