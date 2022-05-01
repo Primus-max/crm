@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Toaster from "@meforma/vue-toaster"
-//import messagePlugin from '@/utils/message.plugin'
+import Loader from "@/components/app/Loader";
 import 'materialize-css/dist/js/materialize.min'
 
 // -- Fire base
@@ -11,6 +11,7 @@ import { initializeApp } from 'firebase/app'
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
 import 'firebase/compat/database'
+
 
 
 
@@ -40,12 +41,14 @@ firebase.initializeApp(firebaseConfig);
 
 let app
 
+
 firebase.auth().onAuthStateChanged(()=> {
  if(!app){
   app = createApp(App)
 
   app.use(store)
   app.use(Toaster)
+  app.component('Loader', Loader)
   app.use(router)
   app.mount('#app')
  }

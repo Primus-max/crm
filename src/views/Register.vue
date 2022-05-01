@@ -103,7 +103,13 @@
                try {
                    await this.$store.dispatch('register', formData)
                    this.$router.push('/')
-               } catch(e){}
+                   this.$toast.success("Вы успешно зарагестрировались!", {
+                       position: "top-right",
+                       duration: 3000,
+                   });
+               } catch(e){
+                    console.log(e)
+               }
 
 
             },

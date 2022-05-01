@@ -53,6 +53,7 @@
     import useVuelidate from '@vuelidate/core'
     import {required, minLength, email} from '@vuelidate/validators'
 
+
     export default {
         name: 'Login',
         setup() {
@@ -86,15 +87,17 @@
                 try {
                     await this.$store.dispatch('login', formData);
                     this.$router.push('/');
+                    this.$toast.success("Добро пожаловать в систему!", {
+                        position: "top-right",
+                        duration: 3000,
+                    });
                 } catch (e) {
-                    this.$toast.error("Вы не авторизовались!", {
+
+                    this.$toast.error("Логин или пароль введен не верно или его не существует!", {
                         position: "top-right",
                         duration: 3000,
                     });
                 }
-            },
-            compute() {
-
             },
 
             printError($name, $param) {

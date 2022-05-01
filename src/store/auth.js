@@ -9,7 +9,7 @@ export default {
                 throw e
             }
         },
-        async register({dispatch},{email, password, name}){
+        async register({dispatch}, {email, password, name}) {
             try {
                 await firebase.auth().createUserWithEmailAndPassword(email, password)
                 const uid = await dispatch('getUid')
@@ -17,16 +17,17 @@ export default {
                     bill: 10000,
                     name
                 })
-            }catch(e){
+            } catch (e) {
                 throw  e
             }
         },
-        getUid(){
-            const user =  firebase.auth().currentUser
-            return user ? user.uid: null
+        getUid() {
+            const user = firebase.auth().currentUser
+            return user ? user.uid : null
         },
-        async logout(){
+        async logout({commit}) {
             await firebase.auth().signOut()
+            commit('clearInfo')
         }
     }
 }

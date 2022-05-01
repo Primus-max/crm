@@ -16,7 +16,7 @@
                             data-target="dropdown"
                             ref="dropdown"
                     >
-                        USER NAME
+                        {{name}}
                         <i class="material-icons right">arrow_drop_down</i>
                     </a>
 
@@ -55,6 +55,11 @@
                     position: "top-right",
                     duration: 3000,
                 })
+            }
+        },
+        computed:{
+            name(){
+                return this.$store.getters.info.name
             }
         },
         mounted() {
