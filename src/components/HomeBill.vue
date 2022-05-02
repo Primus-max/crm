@@ -2,10 +2,10 @@
     <div class="col s12 m6 l4">
         <div class="card light-blue bill-card">
             <div class="card-content white-text">
-                <span class="card-title">Счет в валюте</span>
+                <span class="card-title">Текущий счет</span>
 
                 <p class="currency-line">
-                    <span>12.0 Р</span>
+                    <span>{{`${info.bill.toLocaleString('ru-RU')} руб` }}</span>
                 </p>
             </div>
         </div>
@@ -13,8 +13,13 @@
 </template>
 
 <script>
-    export default {
+    import {mapGetters} from 'vuex'
+    export default{
+    name: 'home-bill',
+        computed:{
+            ...mapGetters(['info']),
 
+        },
     }
 </script>
 

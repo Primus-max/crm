@@ -2,10 +2,13 @@ import {createStore} from 'vuex'
 import auth from './auth'
 import info from "@/store/info"
 import category from "@/store/category"
+import record from "@/store/record";
 
 export default createStore({
     state: {},
-    getters: {},
+    getters: {
+
+    },
     mutations: {},
     actions: {
         async fetchCurrency() {
@@ -18,6 +21,7 @@ export default createStore({
     modules: {
         auth,
         info,
-        category
+        category,
+        record
     }
 })
