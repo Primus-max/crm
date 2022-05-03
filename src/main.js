@@ -5,6 +5,7 @@ import store from './store'
 import Toaster from "@meforma/vue-toaster"
 import Loader from "@/components/app/Loader";
 import 'materialize-css/dist/js/materialize.min'
+import tooltipDirective from '@/directives/tooltip.direcrive'
 
 // -- Fire base
 import { initializeApp } from 'firebase/app'
@@ -48,6 +49,7 @@ firebase.auth().onAuthStateChanged(()=> {
 
   app.use(store)
   app.use(Toaster)
+  app.directive('tooltip', tooltipDirective)
   app.component('Loader', Loader)
   app.use(router)
   app.mount('#app')
