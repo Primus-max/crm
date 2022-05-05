@@ -17,7 +17,7 @@
                 :key="record.id"
         >
             <td>{{ idx + 1}}</td>
-            <td>{{ record.amount }}</td>
+            <td>{{ record.amount.toLocaleString() +' руб'}}</td>
             <td>{{ record.date }}</td>
             <td>{{ record.categoryName }}</td>
             <td>
