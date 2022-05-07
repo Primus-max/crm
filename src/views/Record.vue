@@ -71,7 +71,8 @@
                 >
                 <label for="description">Описание</label>
                 <span
-                        class="helper-text invalid" v-if="v$.description.$error">Введите описание</span>
+                        class="helper-text invalid" v-if="v$.description.$error">Введите описание
+                </span>
             </div>
 
             <button class="btn waves-effect waves-light" type="submit">

@@ -10,17 +10,19 @@
                         @create="addNewCategory"
                 />
 
-                <CategoryEdit
-                        v-if="categories.length"
-                        :categories="categories"
-                        :key="categories.length + updateCount"
-                        @updated="updatedCategories"
-                />
+                    <CategoryEdit
+                            v-if="categories.length"
+                            :categories="categories"
+                            :key="categories.length + updateCount"
+                            @updated="updatedCategories"
+                    />
+
                 <p v-else
                    class="center"
                 >
                     Категорий пока нет
                 </p>
+
             </div>
         </section>
     </div>
@@ -29,7 +31,7 @@
 <script>
     import CategoryCreate from '@/components/CategoryCreate'
     import CategoryEdit from '@/components/CategoryEdit'
-    import Loader from "@/components/app/Loader";
+    import Loader from "@/components/app/Loader"
 
     export default {
         name: 'Categories',

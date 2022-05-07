@@ -7,6 +7,8 @@ import Loader from "@/components/app/Loader";
 import 'materialize-css/dist/js/materialize.min'
 import tooltipDirective from '@/directives/tooltip.direcrive'
 
+
+
 // -- Fire base
 import { initializeApp } from 'firebase/app'
 import firebase from 'firebase/compat/app'
@@ -51,6 +53,7 @@ firebase.auth().onAuthStateChanged(()=> {
   app.use(Toaster)
   app.directive('tooltip', tooltipDirective)
   app.component('Loader', Loader)
+ // app.component('Pagination', Pagination)
   app.use(router)
   app.mount('#app')
  }
